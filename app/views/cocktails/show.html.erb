@@ -1,14 +1,21 @@
-<%= @cocktail.name %>
+<h2><%= @cocktail.name %>
+|  <%= link_to ("<i class='fa fa-pencil'></i>").html_safe, edit_cocktail_path(@cocktail) %>
+| <%= link_to ("<i class='fa fa-trash'></i>").html_safe, edit_cocktail_path(@cocktail), method: :delete %>
 
-<p>Recipe</p>
+</h2>
 
+<h4>Recipe</h4>
+
+<div class="container">
 <% @cocktail.doses.each do |dose| %>
 <p><%= dose.description %> doses of <%= dose.ingredient.name %>
 | <%= link_to 'delete', cocktail_dose_path(@cocktail, dose), method: :delete %></p>
 <% end %>
+
 
 <%= simple_form_for [@cocktail, Dose.new] do |f| %>
   <%= f.input :description %>
   <%= f.input :ingredient_id, as: :select, collection: Ingredient.all %>
   <%= f.submit %> <%= link_to "Back to cocktails", root_path %>
 <% end %>
+</div>
